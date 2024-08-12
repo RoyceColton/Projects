@@ -1,0 +1,100 @@
+#:kivy 2.1.0
+
+<MainScreen>: 
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+
+        ScrollView: 
+            GridLayout:
+                id: task_grid
+                cols: 1
+                spacing: '10dp'
+                size_hint_y: None
+                height: self.minimum_height
+
+                # Dynamically display tasks
+                GridLayout:
+                    id: task_grid
+                    cols: 1
+                    spacing: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    # Iterate over tasks and add TaskWidget for each task
+                    for task in app.tasks:
+                        TaskWidget:
+                            task: task
+
+        Button:
+            text: 'Add Task'
+            size_hint: None, None
+            size: 150, 50
+            on_release: root.manager.current = 'add_edit_task'
+
+<TaskDetailScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+
+        Label:
+            text: f'Title: {selected_task["title"]}'
+            size_hint_y: None
+            height: self.texture_size[1]
+        
+        Label:
+            text: f'Description: {selected_task["description"]}'
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Label:
+            text: f'Due Date: {selected_task["due_date"]}'
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Label:
+            text: f'Status: {selected_task["status"]}'
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Button:
+            text: 'Edit Task'
+            size_hint: None, None
+            size: 150, 50
+            on_release: root.manager.current = 'add_edit_task'
+
+        Button:
+            text: 'Delete Task'
+            size_hint: None, None
+            size: 150, 50
+            on_release: app.root.delete_task(app.root.tasks.index(selected_task))
+
+<AddEditTaskScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+
+        TextInput:
+            id: task_title_input
+            hint_text: 'Enter Task Title'
+
+        TextInput:
+            id: task_description_input
+            hint_text: 'Enter Task Description'
+
+        DatePicker:
+            id: due_date_picker
+            hint_text: 'Select Due Date'
+
+        Spinner:
+            id: status_spinner
+            text: 'Select Status'
+            values: ['Pending', 'In Progress', 'Completed']
+
+        Button:
+            text: 'Save'
+            size_hint: None, None
+            size: 150, 50
+            on_release: app.root.add_task({'title': task_title_input.text, 'description': task_description_input.text, 'due_date': due_date_picker.text, 'status': status_spinner.text})
