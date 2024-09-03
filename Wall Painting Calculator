@@ -1,0 +1,48 @@
+#include <iostream>
+#include <iomanip>              // needed for setprecision() and fixed
+#include <cmath>                // needed for ceil()
+using namespace std;
+
+int main() {
+   double height;
+   double width;
+   double area;
+   int canOfPaint = 350; // one paint gallon covers 350 square feet
+   double paintNeeded; // the amount of paint needed to cover a wall
+   int cansNeeded; // total number of full gallon cans needed to cover a wall
+   double paintCost; // cost of an individual paint can
+   double totalPaintCost; // total cost of paint
+   double salesTax; // cost of the sales tax
+   double totalCost; // total cost of paint + sales tax
+   
+   cin >> height; //input height
+   cin >> width; // input width
+   cin >> paintCost; //cost of paint
+   area = height * width; //calculates the area of the wall 
+   
+   cout << fixed << setprecision(1) << "Wall area: " << area << " sq ft" << endl; //Tells us how big the wall is
+   
+   paintNeeded = area / canOfPaint;
+   
+   cout << fixed << setprecision(3) << "Paint needed: " << paintNeeded << " gallons" << endl;
+   
+   cansNeeded = static_cast<int>(ceil(paintNeeded));
+   
+   cout << "Cans needed: " << cansNeeded << " can(s)" << endl;
+   
+   totalPaintCost = cansNeeded * paintCost;
+   
+   cout << "Paint cost: $" << fixed << setprecision(2) << totalPaintCost << endl;
+   
+   salesTax = totalPaintCost * 0.07;
+   
+   cout << fixed << setprecision(2) << "Sales tax: $" << salesTax << endl; 
+   
+   
+   totalCost = salesTax + totalPaintCost;
+   
+   cout << fixed << setprecision(2) << "Total cost: $" << totalCost << endl;
+   
+
+   return 0;
+}
